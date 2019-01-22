@@ -207,13 +207,13 @@ public:
     }
     void removeMinimum(){
         assert(count != 0);
-        root = removeMinimumRecur(root);
-//        removeMinimumIterate();
+//        root = removeMinimumRecur(root);
+        root = removeMinimumIterate(root);
     }
     void removeMaximum(){
         assert(count != 0);
-        root = removeMaximumRecur(root);
-//        removeMaximumIterate();
+//        root = removeMaximumRecur(root);
+        root = removeMaximumIterate(root);
     }
     void remove(Key key){
         assert(count != 0);
@@ -388,7 +388,7 @@ private:
         return node;
     }
 
-    void removeMinimumIterate(Node *beginRoot){
+    Node* removeMinimumIterate(Node *beginRoot){
         assert( count != 0);
         Node *node = beginRoot;
         Node *preNode = beginRoot;
@@ -402,13 +402,34 @@ private:
             preNode->left = node->right;
             delete node;
             --count;
-            return;
+            return beginRoot;
         }
 
-        //the node need to delete is the root node
-        removeRootNode(node);
+        //the node need to delete is the beginRoot
+        //find the minimum node from the right tree to replace the root node
+        if (node->right != nullptr){
+            node = node->right;
+            while (node->left != nullptr){
+                preNode = node;
+                node = node->left;
+            }
+            preNode->left = nullptr;
+
+            if(beginRoot->right != node) {
+                //this node become the new root node
+                node->left = beginRoot->left;
+                node->right = beginRoot->right;
+            }
+
+            delete beginRoot;
+            return node;
+        }
+
+        //here, the binary tree doesn't have left tree and right tree
+        delete beginRoot;
+        return nullptr;
     }
-    void removeMaximumIterate(Node *beginRoot){
+    Node* removeMaximumIterate(Node *beginRoot){
         assert( count != 0);
         Node *node = beginRoot;
         Node *preNode = beginRoot;
@@ -421,11 +442,32 @@ private:
             preNode->right = node->left;
             delete node;
             --count;
-            return;
+            return beginRoot;
         }
 
-        //the node need to delete is the root node
-        removeRootNode(node);
+        //the node need to delete is the beginRoot
+        //find the maximum node from the left tree to replace the root node
+        if (node->left != nullptr) {
+            node = node->left;
+            while (node->right != nullptr){
+                preNode = node;
+                node = node->right;
+            }
+            preNode->right = nullptr;
+
+            if (beginRoot->left != node) {
+                //this node become the new root node
+                node->left = beginRoot->left;
+                node->right = beginRoot->right;
+            }
+
+            delete beginRoot;
+            return node;
+        }
+
+        //here, the binary tree doesn't have left tree and right tree
+        delete beginRoot;
+        return nullptr;
     }
     Node* removeMinimumRecur(Node *node){
         if (node->left == nullptr){
@@ -446,29 +488,6 @@ private:
         }
         node->right = removeMaximumRecur(node->right);
         return node;
-    }
-
-    void removeRootNode(Node *rootNode){
-        Node *node = rootNode;
-        Node *preNode = rootNode;
-        //the node need to delete is the root node
-        if (node->left != nullptr){
-            while (node->left != nullptr){
-                preNode = node;
-                node = node->left;
-            }
-            *rootNode = *node;
-            preNode->left = nullptr;
-            delete node;
-        } else if (node->right != nullptr){
-            while (node->right != nullptr){
-                preNode = node;
-                node = node->right;
-            }
-            *rootNode = *node;
-            preNode->right = nullptr;
-            delete node;
-        }
     }
 
     Node* removeRecur(Node *node, Key key){
@@ -497,16 +516,16 @@ private:
             }
 
             //get the successor from the right tree
-/*            Node *candidateNode = new Node(findMinimumIterate(node->right));
+            Node *candidateNode = new Node(findMinimumIterate(node->right));
             ++count;
 //            node->right = removeMinimumRecur(node->right);
-            removeMinimumIterate(node->right);*/
+            removeMinimumIterate(node->right);
 
             //get the successor from the left tree
-            Node *candidateNode = new Node(findMaximumIterate(node->left));
+/*            Node *candidateNode = new Node(findMaximumIterate(node->left));
             ++count;
 //            node->left = removeMaximumRecur(node->left);
-            removeMaximumIterate(node->left);
+            removeMaximumIterate(node->left);*/
 
             candidateNode->left = node->left;
             candidateNode->right = node->right;

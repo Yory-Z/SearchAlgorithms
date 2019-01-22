@@ -8,9 +8,25 @@ using namespace std;
 
 void testSearchingPerformance();
 
+void testBST(){
+    BinarySearchTree<int, int> bst;
+//    vector<int> vec{1, 2, 3, 4, 5, 6};
+//    vector<int> vec{6, 5, 4, 3, 2, 1};
+    vector<int> vec{9, 3, 8, 13, 6, 1, 7, 15};
+    for (int i = 0; i < vec.size(); ++i) {
+        bst.insert(vec.at(i), i);
+    }
+
+    bst.levelOrder();
+    cout<<endl;
+    bst.remove(13);
+
+    bst.levelOrder();
+}
+
 int main() {
 
-    testSearchingPerformance();
+    testBST();
     return 0;
 }
 
