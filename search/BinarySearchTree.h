@@ -2,6 +2,13 @@
 // Created by Yory on 2019/1/20.
 //
 
+/*
+ * This Binary Searching Tree doesn't have duplicate key,
+ * if the key gonna insert exists, then update it's value
+ * Description: the very root nodes' value in the binary searching tree is bigger than it's left nodes,
+ *              smaller than it's right nodes
+ * */
+
 #ifndef SEARCHALGORITHMS_BINARYSEARCHTREE_H
 #define SEARCHALGORITHMS_BINARYSEARCHTREE_H
 
@@ -195,7 +202,7 @@ public:
     Key findMaximum(){
         assert( count != 0);
 //        Node *node = findMaximumRecur(root);
-        Node *node = findMaximumIterate();
+        Node *node = findMaximumIterate(root);
         return node->key;
     }
     void removeMinimum(){
@@ -214,25 +221,14 @@ public:
     }
 
 private:
-    Value* searchIterate(Key key){
-        Node *node = root;
-        while (node != nullptr){
-            if (key == node->key){
-                return &(node->value);
-            } else if (key < node->key){
-                node = node->left;
-            } else {
-                node = node->right;
-            }
-        }
-        return nullptr;
-    }
     void insertIterate(Key key, Value value) {
         Node *node = root;
         Node *preNode = root;
 
+        //find the correct location
         while (node != nullptr){
             if (key == node->key){
+                //the key already existed, update it's value
                 node->value = value;
                 return;
             } else if (key < node->key){
@@ -245,6 +241,7 @@ private:
         }
 
         Node *temp = new Node(key, value);
+        //if the preNode is not nullptr, it mean the location isn't the root
         if (preNode != nullptr){
             if (key < preNode->key){
                 preNode->left = temp;
@@ -252,9 +249,10 @@ private:
                 preNode->right = temp;
             }
         } else {
+            //if the preNode is nullptr, it mean the binary tree doesn't have node
+            //so the new created node will be the root node
             root = temp;
         }
-
     }
     bool containIterate(Key key){
         Node *node = root;
@@ -268,6 +266,19 @@ private:
             }
         }
         return false;
+    }
+    Value* searchIterate(Key key){
+        Node *node = root;
+        while (node != nullptr){
+            if (key == node->key){
+                return &(node->value);
+            } else if (key < node->key){
+                node = node->left;
+            } else {
+                node = node->right;
+            }
+        }
+        return nullptr;
     }
 
     Value* searchRecur(Node *node, Key key){
@@ -284,16 +295,21 @@ private:
         }
     }
     Node* insertRecur(Node *node, Key key, Value value){
+        //when the node is nullptr, it means the recursion is end
+        //now just return the new created node, the preNode will point to it
         if (node == nullptr){
             ++count;
             return new Node(key, value);
         }
 
         if (key == node->key){
+            //the key already existed, update it's value
             node->value = value;
         } else if (key < node->key){
+            //the key is smaller the current root node's key, turn to the left tree
             node->left = insertRecur(node->left, key, value);
         } else if (key > node->key){
+            //the key is bigger the current root node's key, turn to the right tree
             node->right = insertRecur(node->right, key, value);
         }
         return node;

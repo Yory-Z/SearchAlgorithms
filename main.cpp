@@ -14,9 +14,12 @@ int main() {
     return 0;
 }
 
+
 void testSearchingPerformance(){
     vector<string> words;
     string fileName = "E:\\CPPProject\\SearchAlgorithms\\search\\Diary.txt";
+
+    //the words will be convert to lowercase letters
     FileWordsExtract::ExtractWords(fileName, words);
     string find = "he";
 
