@@ -505,18 +505,26 @@ private:
             node->right = removeRecur(node->right, key);
             return node;
         } else {
+            //the current node's left tree is nullptr
+            //delete the current node, and return it's right node(nullptr is ok)
             if (node->left == nullptr){
                 Node *rightNode = node->right;
                 delete node;
                 --count;
                 return rightNode;
             }
+
+            //the current node's right tree is nullptr
+            //delete the current node, and return it's left node(nullptr is ok)
             if (node->right == nullptr){
                 Node *leftNode = node->left;
                 delete node;
                 --count;
                 return leftNode;
             }
+
+            //In this case, the current node's have left tree and right tree
+            //We have two solution
 
             //solution 1: get the successor from the right tree
             Node *candidateNode = new Node(findMinimumIterate(node->right));
