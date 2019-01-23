@@ -530,8 +530,6 @@ private:
             //solution 2:get the successor from the left tree
             Node *candidateNode = findCandidateNodeReplace(node);
 
-            candidateNode->left = node->left;
-            candidateNode->right = node->right;
             delete node;
             --count;
             return candidateNode;
@@ -542,13 +540,17 @@ private:
         Node* node = beginRoot;
         Node* preNode = beginRoot;
 
-        while (key != node->key) {
+        while (node != nullptr && key != node->key) {
             preNode = node;
             if (key < node->key) {
                 node = node->left;
             } else {
                 node = node->right;
             }
+        }
+
+        if (node == nullptr) {
+            return beginRoot;
         }
 
         //the node need to delete isn't the beginRoot node

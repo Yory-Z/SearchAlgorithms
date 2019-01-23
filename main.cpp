@@ -19,7 +19,7 @@ void testBST(){
 
     bst.levelOrder();
     cout<<endl;
-    bst.remove(6);
+    bst.remove(11);
 
     bst.levelOrder();
 }
