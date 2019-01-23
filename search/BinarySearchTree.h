@@ -515,17 +515,17 @@ private:
                 return leftNode;
             }
 
-            //get the successor from the right tree
+            //solution 1: get the successor from the right tree
             Node *candidateNode = new Node(findMinimumIterate(node->right));
             ++count;
 //            node->right = removeMinimumRecur(node->right);
-            removeMinimumIterate(node->right);
+            node->right = removeMinimumIterate(node->right);
 
-            //get the successor from the left tree
+            //solution 2:get the successor from the left tree
 /*            Node *candidateNode = new Node(findMaximumIterate(node->left));
             ++count;
 //            node->left = removeMaximumRecur(node->left);
-            removeMaximumIterate(node->left);*/
+            node->left = removeMaximumIterate(node->left);*/
 
             candidateNode->left = node->left;
             candidateNode->right = node->right;
