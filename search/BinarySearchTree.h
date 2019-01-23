@@ -406,6 +406,7 @@ private:
         }
 
         //the node need to delete is the beginRoot
+        //the binary tree from the beginRoot doesn't have left tree
         //find the minimum node from the right tree to replace the root node
         if (node->right != nullptr){
             node = node->right;
@@ -438,6 +439,7 @@ private:
             node = node->right;
         }
 
+        //the node need to delete isn't the root node
         if (preNode != node){
             preNode->right = node->left;
             delete node;
@@ -446,6 +448,7 @@ private:
         }
 
         //the node need to delete is the beginRoot
+        //the binary tree from the beginRoot doesn't have right tree
         //find the maximum node from the left tree to replace the root node
         if (node->left != nullptr) {
             node = node->left;
@@ -465,7 +468,7 @@ private:
             return node;
         }
 
-        //here, the binary tree doesn't have left tree and right tree
+        //here, the binary tree from the beginRoot doesn't have left tree and right tree
         delete beginRoot;
         return nullptr;
     }
