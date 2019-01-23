@@ -217,7 +217,8 @@ public:
     }
     void remove(Key key){
         assert(count != 0);
-        root = removeRecur(root, key);
+//        root = removeRecur(root, key);
+        root = removeIterate(root, key);
     }
 
 private:
@@ -525,18 +526,9 @@ private:
 
             //In this case, the current node's have left tree and right tree
             //We have two solution
-
             //solution 1: get the successor from the right tree
-            Node *candidateNode = new Node(findMinimumIterate(node->right));
-            ++count;
-//            node->right = removeMinimumRecur(node->right);
-            node->right = removeMinimumIterate(node->right);
-
             //solution 2:get the successor from the left tree
-/*            Node *candidateNode = new Node(findMaximumIterate(node->left));
-            ++count;
-//            node->left = removeMaximumRecur(node->left);
-            node->left = removeMaximumIterate(node->left);*/
+            Node *candidateNode = findCandidateNodeReplace(node);
 
             candidateNode->left = node->left;
             candidateNode->right = node->right;
@@ -544,6 +536,86 @@ private:
             --count;
             return candidateNode;
         }
+    }
+
+    Node* removeIterate(Node *beginRoot, Key key) {
+        Node* node = beginRoot;
+        Node* preNode = beginRoot;
+
+        while (key != node->key) {
+            preNode = node;
+            if (key < node->key) {
+                node = node->left;
+            } else {
+                node = node->right;
+            }
+        }
+
+        //the node need to delete isn't the beginRoot node
+        if (preNode != node) {
+
+            if (node->left == nullptr) {
+                //if the current node doesn't have left tree
+                //let the preNode point to it's right tree
+                //delete the current node, and return the right tree(nullptr is ok)
+
+                Node* rightNode = node->right;
+                preNode->left == node ? preNode->left = rightNode : preNode->right = rightNode;
+            } else if (node->right == nullptr) {
+                //if the current node doesn't have right tree
+                //let the preNode point to it's left tree
+                //delete the current node, and return the left tree(nullptr is ok)
+
+                Node* leftNode = node->left;
+                preNode->left == node ? preNode->left = leftNode : preNode->right = leftNode;
+            } else {
+                //the current node have right tree and left tree
+                Node* candidateNode = findCandidateNodeReplace(node);
+                preNode->left == node ? preNode->left = candidateNode : preNode->right = candidateNode;
+            }
+
+            delete node;
+            --count;
+            return beginRoot;
+        }
+
+        //the node need to delete is the beginRoot node
+        //or the current node's left tree and right tree isn't nullptr
+        Node* candidateNode = findCandidateNodeReplace(node);
+        delete node;
+        return candidateNode;
+
+    }
+
+    Node* findCandidateNodeReplace(Node* node){
+        assert(node->left != nullptr || node->right != nullptr);
+
+        Node* candidateNode = nullptr;
+        if (node->left != nullptr) {
+            //solution 1: get the successor from the left tree
+
+            candidateNode = new Node(findMaximumIterate(node->left));
+
+//            node->left = removeMaximumRecur(node->left);
+            node->left = removeMaximumIterate(node->left);
+
+            candidateNode->left = node->left;
+            candidateNode->right = node->right;
+        } else {
+            //solution 2:get the successor from the right tree
+
+            candidateNode = new Node(findMinimumIterate(node->right));
+
+            node->right = removeMinimumRecur(node->right);
+//            node->right = removeMinimumIterate(node->right);
+
+            candidateNode->left = node->left;
+            candidateNode->right = node->right;
+        }
+
+        //because this function create a node
+        ++count;
+        return candidateNode;
     }
 
 };
