@@ -17,14 +17,13 @@ void testBST(){
         bst.insert(vec.at(i), i);
     }
 
-    bst.inOrderIterate();
+    bst.levelOrder();
     cout<<endl;
-    bst.inOrder();
 }
 
 int main() {
 
-    testBST();
+    testSearchingPerformance();
     return 0;
 }
 
@@ -49,13 +48,12 @@ void testSearchingPerformance(){
         }
     }
 
-    cout<<"all words: "<<words.size()<<", bst words(no duplicate): "<<bst.size()<<endl;
+/*    cout<<"all words: "<<words.size()<<", bst words(no duplicate): "<<bst.size()<<endl;
     if (bst.contain(find)){
         cout<<find<<" : "<<*bst.search(find)<<endl;
     } else{
         cout<<"no "<<find<<" in "<<fileName<<endl;
-    }
-
+    }*/
 
     time_t time2 = clock();
 
@@ -69,9 +67,9 @@ void testSearchingPerformance(){
         }
     }
 
-    cout<<"all words: "<<words.size()<<", sst words(no duplicate): "<<sst.size()<<endl;
+    cout<<"all words: "<<words.size()<<", binary tree's words(no duplicate): "<<sst.size()<<endl;
     if (sst.contain(find)){
-        cout<<find<<" : "<<*sst.search(find)<<endl;
+        cout<<"find "<<find<<", occur "<<*sst.search(find)<<" times."<<endl;
     } else{
         cout<<"no "<<find<<" in "<<fileName<<endl;
     }
@@ -79,7 +77,7 @@ void testSearchingPerformance(){
     time_t time3 = clock();
 
     cout<<endl;
-    cout<<"course time analysis:"<<endl;
+    cout<<"Time cause analysis:"<<endl;
     cout<<"binary tree search: "<<double(time2 - time1) / CLOCKS_PER_SEC<<" S"<<endl;
     cout<<"sequence search: "<<double(time3- time2) / CLOCKS_PER_SEC<<" S"<<endl;
 

@@ -165,11 +165,13 @@ public:
             }
             tagNode = st.top();
             st.pop();
+            //has traversed the node a time
             if (tagNode.flag == 1){
                 tagNode.flag = 2;
                 st.push(tagNode);
                 node = tagNode.node->right;
             } else {
+                //the second time traverse the node
                 cout<<tagNode.node->key<<' ';
                 node = nullptr;
             }
