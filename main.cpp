@@ -34,51 +34,65 @@ void testSearchingPerformance(){
 
     //the words will be convert to lowercase letters
     FileWordsExtract::ExtractWords(fileName, words);
-    string find = "he";
 
-    time_t time1 = clock();
+    time_t buildBegin, buildEnd;
 
-    BinarySearchTree<string, int> bst;
+    cout<<"Build Time cause analysis:"<<endl;
+    buildBegin = clock();
+    BinarySearchTree<string, int> binarySearchTree;
     for (vector<string>::iterator it = words.begin(); it != words.end(); ++it){
-        int *res = bst.search(*it);
+        int *res = binarySearchTree.search(*it);
         if (res == nullptr){
-            bst.insert(*it, 1);
+            binarySearchTree.insert(*it, 1);
         } else {
             ++(*res);
         }
     }
+    buildEnd = clock();
+    cout<<"binary tree build cause time: "<<double(buildEnd - buildBegin) / CLOCKS_PER_SEC<<" S"<<endl;
 
-/*    cout<<"all words: "<<words.size()<<", bst words(no duplicate): "<<bst.size()<<endl;
-    if (bst.contain(find)){
-        cout<<find<<" : "<<*bst.search(find)<<endl;
-    } else{
-        cout<<"no "<<find<<" in "<<fileName<<endl;
-    }*/
-
-    time_t time2 = clock();
-
-    SequenceSearchTree<string, int> sst;
+    buildBegin = clock();
+    SequenceSearchTree<string, int> sequenceSearchTree;
     for (vector<string>::iterator it = words.begin(); it != words.end(); ++it){
-        int *res = sst.search(*it);
+        int *res = sequenceSearchTree.search(*it);
         if (res == nullptr){
-            sst.insert(*it, 1);
+            sequenceSearchTree.insert(*it, 1);
         } else {
             ++(*res);
         }
     }
+    buildEnd = clock();
+    cout<<"sequence build cause time: "<<double(buildEnd - buildBegin) / CLOCKS_PER_SEC<<" S"<<endl;
 
-    cout<<"all words: "<<words.size()<<", binary tree's words(no duplicate): "<<sst.size()<<endl;
-    if (sst.contain(find)){
-        cout<<"find "<<find<<", occur "<<*sst.search(find)<<" times."<<endl;
-    } else{
-        cout<<"no "<<find<<" in "<<fileName<<endl;
-    }
-
-    time_t time3 = clock();
-
+    cout<<"all words: "<<words.size()<<", binary tree's words(no duplicate): "<<sequenceSearchTree.size()<<endl;
     cout<<endl;
-    cout<<"Time cause analysis:"<<endl;
-    cout<<"binary tree search: "<<double(time2 - time1) / CLOCKS_PER_SEC<<" S"<<endl;
-    cout<<"sequence search: "<<double(time3- time2) / CLOCKS_PER_SEC<<" S"<<endl;
+
+
+    cout<<"Search time cause analysis: "<<endl;
+    string find;
+
+    time_t start, end;
+
+    srand(time(NULL));
+    int testTime = 10;
+    for (int i = 0; i < testTime; ++i) {
+        find = words.at(rand() % words.size());
+
+        cout<<"find: "<<find<<endl;
+        int occurTimes = 0;
+
+        start = clock();
+        occurTimes = *binarySearchTree.search(find);
+        end = clock();
+        cout<<"binary tree search cause time: "<<double(end - start) / CLOCKS_PER_SEC<<" S"<<endl;
+
+        start = clock();
+        occurTimes = *sequenceSearchTree.search(find);
+        end = clock();
+        cout<<"sequence search cause time: "<<double(end - start) / CLOCKS_PER_SEC<<" S"<<endl;
+
+        cout<<"occur "<<occurTimes<<endl;
+        cout<<endl;
+    }
 
 }
