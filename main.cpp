@@ -12,16 +12,14 @@ void testBST(){
     BinarySearchTree<int, int> bst;
 //    vector<int> vec{1, 2, 3, 4, 5, 6};
 //    vector<int> vec{6, 5, 4, 3, 2, 1};
-    vector<int> vec{9, 3, 8, 13, 10, 6, 1, 7, 15};
+    vector<int> vec{9, 3, 13, 1, 8, 10, 19, 12, 15, 14, 17};
     for (int i = 0; i < vec.size(); ++i) {
         bst.insert(vec.at(i), i);
     }
 
-    bst.levelOrder();
+    bst.inOrderIterate();
     cout<<endl;
-    bst.remove(11);
-
-    bst.levelOrder();
+    bst.inOrder();
 }
 
 int main() {

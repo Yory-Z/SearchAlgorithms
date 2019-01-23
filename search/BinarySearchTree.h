@@ -130,10 +130,10 @@ public:
             }
         }
     }
-    void midOrder(){
-        midOrderRecur(root);
+    void inOrder(){
+        inOrderRecur(root);
     }
-    void midOrderIterate(){
+    void inOrderIterate(){
         Node *node = root;
         stack<Node *> st;
         while (!st.empty() || node != nullptr) {
@@ -336,11 +336,11 @@ private:
             preOrderRecur(node->right);
         }
     }
-    void midOrderRecur(Node *node){
+    void inOrderRecur(Node *node){
         if (node != nullptr){
-            midOrderRecur(node->left);
+            inOrderRecur(node->left);
             cout<<node->key<<' ';
-            midOrderRecur(node->right);
+            inOrderRecur(node->right);
         }
     }
     void postOrderRecur(Node *node){
@@ -586,7 +586,6 @@ private:
         Node* candidateNode = findCandidateNodeReplace(node);
         delete node;
         return candidateNode;
-
     }
 
     Node* findCandidateNodeReplace(Node* node){
