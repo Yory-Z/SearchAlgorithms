@@ -1,10 +1,11 @@
-# SearchAlgorithms
-The implementation, complexity analyses and performance test of Sequence Searching Tree, Binary Searching Tree and RedBlackTree
+# Searching Algorithms
+<p>The implementation, complexity analyses and performance test of Sequence Tree, Binary Searching Tree and
+Red Black Tree</p>
 
-<strong>Build time cause analysis:</strong><br/>
-binary tree build cause time: 0.743 S<br/>
-sequence build cause time: 16.461 S<br/>
-all words: 1534284, binary tree's words(no duplicate): 1360
+<strong>Building time cause analysis:</strong><br/>
+Binary Searching Tree build cause time: 0.743 S<br/>
+Sequence Tree build cause time: 16.461 S<br/>
+All words: 1534284, Binary tree's words(no duplicate): 1360
 <br/>
 
 <strong>Building Time and MidOrder  cause analysis:</strong><br/>
