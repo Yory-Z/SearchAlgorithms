@@ -1,15 +1,15 @@
 # Searching Algorithms
-<p>The implementation, complexity analyses and performance test of Sequence Tree, Binary Searching Tree and
-Red Black Tree</p>
+<h1>The implementation, complexity analyses and performance test of Sequence Tree, Binary Searching Tree and
+Red Black Tree</h1>
 
-<strong>Building time cause analysis:</strong><br/>
+<h2>Building time cause analysis:</h2>
 Binary Searching Tree build cause time: 0.743 S<br/>
 Sequence Tree build cause time: 16.461 S<br/>
 All words: 1534284, Binary tree's words(no duplicate): 1360
 <br/>
 
-<strong>Building Time and MidOrder  cause analysis:</strong><br/>
-<p>The data set is almost ordered</p>
+<h2>Building Time and MidOrder  cause analysis:</h2>
+<h3>The data set is almost ordered</h3>
 <table>
     <thead>
         <tr>
@@ -68,7 +68,7 @@ All words: 1534284, Binary tree's words(no duplicate): 1360
 </table>
 <br/>
 
-<p>The data set is unordered</p>
+<h3>The data set is unordered</h3>
 <table>
     <thead>
         <tr>
