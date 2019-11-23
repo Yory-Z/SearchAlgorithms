@@ -6,9 +6,10 @@
 #define SEARCHALGORITHMS_ARRAYHELPER_H
 
 
-#include<iostream>
-#include<ctime>
+#include <iostream>
+#include <ctime>
 #include <cassert>
+#include <vector>
 
 using namespace std;
 
@@ -21,6 +22,13 @@ namespace ArrayHelper{
         cout<<endl;
     }
 
+    void PrintVec(vector<int> vec) {
+        for (int i : vec) {
+            cout << i << ' ';
+        }
+        cout<<endl;
+    }
+
     int* GenerateUnorderArray(int sum, int begin, int end){
         int* arr = new int[sum];
         srand(time(NULL));
@@ -28,6 +36,15 @@ namespace ArrayHelper{
             arr[i] = rand() % (end - begin + 1) + begin;
         }
         return arr;
+    }
+
+    vector<int> GenerateUnorderVec(int sum, int begin, int end){
+        vector<int> vec(sum);
+        srand(time(NULL));
+        for (int i = 0; i < sum; ++i) {
+            vec[i] = rand() % (end - begin + 1) + begin;
+        }
+        return vec;
     }
 
     int* GenerateNearlyOrderArray(int n, int swapTimes){
@@ -43,6 +60,22 @@ namespace ArrayHelper{
             swap(arr[posX], arr[posY]);
         }
         return arr;
+    }
+
+    vector<int> GenerateNearlyOrderVec(int n, int swapTimes){
+        vector<int> vec(n);
+
+        for (int i = 0; i < n; ++i) {
+            vec[i] = i;
+        }
+
+        srand(time(NULL));
+        for (int j = 0; j < swapTimes; ++j) {
+            int posX = rand()%n;
+            int posY = rand()%n;
+            swap(vec[posX], vec[posY]);
+        }
+        return vec;
     }
 
     template <typename T>

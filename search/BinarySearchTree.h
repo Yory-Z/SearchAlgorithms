@@ -85,7 +85,7 @@ public:
     }
     BinarySearchTree(): root(nullptr), count(0){}
     ~BinarySearchTree(){
-        destroyRecur(root);
+//        destroyRecur(root);
     }
 
     int size(){
@@ -144,7 +144,7 @@ public:
             if (!st.empty()){
                 node = st.top();
                 st.pop();
-                cout<<node->key<<' ';
+//                cout<<node->key<<' ';
                 node = node->right;
             }
         }
@@ -284,19 +284,6 @@ private:
         return nullptr;
     }
 
-    Value* searchRecur(Node *node, Key key){
-        if (node == nullptr){
-            return nullptr;
-        }
-
-        if (key == node->key){
-            return &(node->value);
-        } else if (key < node->key){
-            return searchRecur(node->left, key);
-        } else {
-            return searchRecur(node->right, key);
-        }
-    }
     Node* insertRecur(Node *node, Key key, Value value){
         //when the node is nullptr, it means the recursion is end
         //now just return the new created node, the preNode will point to it
@@ -328,6 +315,19 @@ private:
             return containRecur(node->left, key);
         } else {
             return containRecur(node->right, key);
+        }
+    }
+    Value* searchRecur(Node *node, Key key){
+        if (node == nullptr){
+            return nullptr;
+        }
+
+        if (key == node->key){
+            return &(node->value);
+        } else if (key < node->key){
+            return searchRecur(node->left, key);
+        } else {
+            return searchRecur(node->right, key);
         }
     }
 
@@ -537,7 +537,6 @@ private:
             return candidateNode;
         }
     }
-
     Node* removeIterate(Node *beginRoot, Key key) {
         Node* node = beginRoot;
         Node* preNode = beginRoot;
