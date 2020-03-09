@@ -15,6 +15,7 @@ void testSearchingPerformance();
 
 void BSTvsRBT();
 
+void testBinarySearchTree();
 
 int main() {
 
@@ -22,9 +23,27 @@ int main() {
 
 //    testRBT();
 
-    BSTvsRBT();
+//    BSTvsRBT();
+
+    testBinarySearchTree();
 
     return 0;
+}
+
+void testBinarySearchTree() {
+    BinarySearchTree<int, int> binarySearchTree;
+//    vector<int> vec{9, 3, 13, 1, 8, 10, 15, 2, 12};
+//    vector<int> vec{9, 13, 10, 15, 12};
+    vector<int> vec{1};
+    for (int i : vec) {
+        binarySearchTree.insert(i, i);
+    }
+
+    binarySearchTree.levelOrder();
+    cout<<endl;
+    binarySearchTree.removeMinimum();
+    binarySearchTree.levelOrder();
+
 }
 
 void BSTvsRBT() {

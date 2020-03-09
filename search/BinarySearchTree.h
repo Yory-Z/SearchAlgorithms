@@ -144,7 +144,7 @@ public:
             if (!st.empty()){
                 node = st.top();
                 st.pop();
-//                cout<<node->key<<' ';
+                cout<<node->key<<' ';
                 node = node->right;
             }
         }
@@ -179,6 +179,9 @@ public:
     }
 
     void levelOrder(){
+        if (count == 0) {
+            return;
+        }
         queue<Node *> q;
         q.push(root);
         while (!q.empty()){
@@ -393,6 +396,13 @@ private:
 
     Node* removeMinimumIterate(Node *beginRoot){
         assert( count != 0);
+        if (beginRoot->left == nullptr) {
+            Node *rightNode = beginRoot->right;
+            delete beginRoot;
+            --count;
+            return rightNode;
+        }
+
         Node *node = beginRoot;
         Node *preNode = beginRoot;
         while (node->left != nullptr){
@@ -401,37 +411,11 @@ private:
         }
 
         //the node need to delete isn't the root node
-        if (preNode != node){
-            preNode->left = node->right;
-            delete node;
-            --count;
-            return beginRoot;
-        }
+        preNode->left = node->right;
+        delete node;
+        --count;
+        return beginRoot;
 
-        //the node need to delete is the beginRoot
-        //the binary tree from the beginRoot doesn't have left tree
-        //find the minimum node from the right tree to replace the root node
-        if (node->right != nullptr){
-            node = node->right;
-            while (node->left != nullptr){
-                preNode = node;
-                node = node->left;
-            }
-            preNode->left = nullptr;
-
-            if(beginRoot->right != node) {
-                //this node become the new root node
-                node->left = beginRoot->left;
-                node->right = beginRoot->right;
-            }
-
-            delete beginRoot;
-            return node;
-        }
-
-        //here, the binary tree doesn't have left tree and right tree
-        delete beginRoot;
-        return nullptr;
     }
     Node* removeMaximumIterate(Node *beginRoot){
         assert( count != 0);
