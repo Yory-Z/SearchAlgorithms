@@ -396,6 +396,7 @@ private:
 
     Node* removeMinimumIterate(Node *beginRoot){
         assert( count != 0);
+        // the minimum node is the root node
         if (beginRoot->left == nullptr) {
             Node *rightNode = beginRoot->right;
             delete beginRoot;
@@ -419,6 +420,14 @@ private:
     }
     Node* removeMaximumIterate(Node *beginRoot){
         assert( count != 0);
+        // the maximum node is the root node
+        if (beginRoot->right == nullptr) {
+            Node *leftNode = beginRoot->left;
+            delete beginRoot;
+            --count;
+            return leftNode;
+        }
+
         Node *node = beginRoot;
         Node *preNode = beginRoot;
         while (node->right != nullptr){
@@ -427,37 +436,11 @@ private:
         }
 
         //the node need to delete isn't the root node
-        if (preNode != node){
-            preNode->right = node->left;
-            delete node;
-            --count;
-            return beginRoot;
-        }
+        preNode->right = node->left;
+        delete node;
+        --count;
+        return beginRoot;
 
-        //the node need to delete is the beginRoot
-        //the binary tree from the beginRoot doesn't have right tree
-        //find the maximum node from the left tree to replace the root node
-        if (node->left != nullptr) {
-            node = node->left;
-            while (node->right != nullptr){
-                preNode = node;
-                node = node->right;
-            }
-            preNode->right = nullptr;
-
-            if (beginRoot->left != node) {
-                //this node become the new root node
-                node->left = beginRoot->left;
-                node->right = beginRoot->right;
-            }
-
-            delete beginRoot;
-            return node;
-        }
-
-        //here, the binary tree from the beginRoot doesn't have left tree and right tree
-        delete beginRoot;
-        return nullptr;
     }
     Node* removeMinimumRecur(Node *node){
         if (node->left == nullptr){
